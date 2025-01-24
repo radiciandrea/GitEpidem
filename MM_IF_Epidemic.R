@@ -37,8 +37,8 @@ df <- function(t, x, parms) {
     
     dE_d = beta*omega[t_n, ]*(AS+AE+AI) -  h[t_n, ]*sigma[t_n, ]*E_d 
     
-    dAS = delta_I*I - mu_A[t_n, ]*AS - a[t_n, ]*phi*b_H2v*ic[t_n, ]*AS
-    dAE = a[t_n, ]*phi*b_H2v*ic[t_n, ]*AS - mu_A[t_n, ]*AE - ni[t_n, ]*AE
+    dAS = delta_I*I - mu_A[t_n, ]*AS - a[t_n, ]*phi_a*b_H2v*ic_m[t_n, ]*AS
+    dAE = a[t_n, ]*phi_a*b_H2v*ic_m[t_n, ]*AS - mu_A[t_n, ]*AE - ni[t_n, ]*AE
     dAI = ni[t_n, ]*AE - mu_A[t_n, ]*AI 
     
     dx <- c(dE, dJ, dI, dAS, dE_d, dAE, dAI)
@@ -61,8 +61,8 @@ df_log <- function(t, x, parms) {
     logAS = x[(1+n_r*3):(4*n_r)]
     E_d = x[(1+n_r*4):(5*n_r)]
     
-    logAS = x[(1+n_r*5):(6*n_r)]
-    logAS = x[(1+n_r*6):(7*n_r)]
+    logAE = x[(1+n_r*5):(6*n_r)]
+    logAI = x[(1+n_r*6):(7*n_r)]
     
     #t_n = t[1]-t_s+1 # time of numerical integration to index matrix
     t_n = t[1]
@@ -87,8 +87,8 @@ df_log <- function(t, x, parms) {
 
     dE_d = beta*omega[t_n, ]*(exp(logAS)+exp(logAE)+exp(logAI)) -  h[t_n, ]*sigma[t_n, ]*E_d
     
-    dlogAS = delta_I*exp(logI)/exp(logA) - mu_A[t_n, ] - a[t_n, ]*phi*b_H2v*ic[t_n, ]
-    dlogAE = a[t_n, ]*phi*b_H2v*ic[t_n, ]*exp(logAS)/exp(logAE) - mu_A[t_n, ] - ni[t_n, ]
+    dlogAS = delta_I*exp(logI)/exp(logAS) - mu_A[t_n, ] - a[t_n, ]*phi_a*b_H2v*ic_m[t_n, ]
+    dlogAE = a[t_n, ]*phi_a*b_H2v*ic_m[t_n, ]*exp(logAS)/exp(logAE) - mu_A[t_n, ] - ni[t_n, ]
     dlogAI = ni[t_n, ]*exp(logAE)/exp(logAI) - mu_A[t_n, ]
     
     dx <- c(dlogE, dlogJ, dlogI, dlogAS, dE_d, dlogAE, dlogAI)
